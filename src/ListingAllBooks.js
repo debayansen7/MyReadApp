@@ -8,7 +8,7 @@ class ListingAllBooks extends Component{
 
   state = {
     books: [],
-    currentlyReadBooks: [],
+    currentlyReading: [],
     wantToReadBooks: [],
     readBooks: [],
     updatedList: []
@@ -16,16 +16,25 @@ class ListingAllBooks extends Component{
 
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
-      // console.log(books);
+      console.log(books);
       this.setState({books});
       this.updatedList();
     })
   };
 
+  updatedList(){
+    // console.log(books);
+    this.setState(()=>({
+      currentlyReading: this.state.books.filter((book) => book.shelf === 'currentlyReading'),
+      wantToReadBooks: this.state.books.filter((book) => book.shelf === 'wantToRead' ),
+      readBooks: this.state.books.filter((book) => book.shelf === 'read' )
+    }))
+  };
+
   updateShelf(book, shelf) {
     alert("Updated "+book.title+" to shelf: "+shelf);
-    console.log(book);
-    console.log(shelf);
+    // console.log(book);
+    // console.log(shelf);
     BooksAPI.update(book, shelf).then((books) => {
       console.log(books);
       this.setState({ updatedList: books })
@@ -35,17 +44,8 @@ class ListingAllBooks extends Component{
     });
   };
 
-  updatedList(){
-    // console.log(books);
-    this.setState(()=>({
-      currentlyReadBooks: this.state.books.filter((book) => book.shelf === 'currentlyReading'),
-      wantToReadBooks: this.state.books.filter((book) => book.shelf === 'wantToRead' ),
-      readBooks: this.state.books.filter((book) => book.shelf === 'read' )
-    }))
-  };
-
   render(){
-    const {currentlyReadBooks, wantToReadBooks, readBooks} = this.state;
+    const {currentlyReading, wantToReadBooks, readBooks} = this.state;
   	return(
       <div className="list-books">
         <div className="list-books-title"><h1>MyReads</h1></div>
@@ -53,7 +53,7 @@ class ListingAllBooks extends Component{
           <div>
             <ListBooks
               heading={"Currently Reading"}
-              books={currentlyReadBooks}
+              books={currentlyReading}
               onUpdate={this.updateShelf} />
 
             <ListBooks
@@ -65,8 +65,6 @@ class ListingAllBooks extends Component{
               heading={"Want To Read"}
               books={wantToReadBooks}
               onUpdate={this.updateShelf} />
-
-
 
           </div>
         </div>
