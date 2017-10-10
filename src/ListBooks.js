@@ -4,7 +4,8 @@ import Book from './Book'
 
 class ListBooks extends Component {
   static propTypes = {
-    books: PropTypes.array.isRequired
+    books: PropTypes.array.isRequired,
+    onUpdate: PropTypes.func
   }
   render(){
     const {books, onUpdate} = this.props;

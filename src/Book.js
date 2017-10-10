@@ -12,12 +12,14 @@ class Book extends Component {
 			thumbnail: props.book.imageLinks.thumbnail,
 			ratings: props.book.ratings
 		};
-    // this.handleEvent = this.handleEvent.bind(this);
+    this.handleEvent = this.handleEvent.bind(this);
   }
+
 	handleEvent(event) {
 		const shelf = event.target.value;
 		this.props.onUpdate(this.props.book, shelf);
 	};
+
 	render(){
 		const {authors, title, shelf, thumbnail, ratings} = this.state;
 		return(
@@ -25,7 +27,7 @@ class Book extends Component {
 				<div className="book-top">
 					<div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${thumbnail})` }}></div>
 						<div className="book-shelf-changer">
-			        <select className="select" value={shelf} onChange={this.handleEvent.bind(this)}>
+			        <select className="select" value={shelf} onChange={this.handleEvent}>
 			          <option value="none" disabled>Move to...</option>
 			          <option value="currentlyReading">Currently Reading</option>
 			          <option value="wantToRead">Want to Read</option>
