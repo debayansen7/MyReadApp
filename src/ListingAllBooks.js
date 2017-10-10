@@ -25,19 +25,18 @@ class ListingAllBooks extends Component{
     alert("Updated "+book.title+" to shelf: "+shelf);
     console.log(book);
     console.log(shelf);
-    BooksAPI.update(book, shelf).then((books) => {
-      console.log(books);
-      this.setState({ updatedList: books })
-      // this.state.updatedList = books;
-      console.log(this.state.updatedList);
-
-    });
+    // BooksAPI.update(book, shelf).then((books) => {
+    //   console.log(books);
+    //   this.setState({ updatedList: books })
+    //   // this.state.updatedList = books;
+    //   console.log(this.state.updatedList);
+    //
+    // });
   };
 
   render(){
-
     const {books} = this.state;
-    // const {books} = this.props;
+
     const currentlyReadBooks= books.filter((book) => book.shelf === 'currentlyReading');
     const wantToReadBooks= books.filter((book) => book.shelf === 'wantToRead' );
     const readBooks= books.filter((book) => book.shelf === 'read' );
