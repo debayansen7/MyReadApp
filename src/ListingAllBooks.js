@@ -16,8 +16,9 @@ class ListingAllBooks extends Component{
 
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
-      console.log(books);
-      this.setState({books})
+      // console.log(books);
+      this.setState({books});
+      this.updatedList();
     })
   };
 
@@ -25,23 +26,26 @@ class ListingAllBooks extends Component{
     alert("Updated "+book.title+" to shelf: "+shelf);
     console.log(book);
     console.log(shelf);
-    // BooksAPI.update(book, shelf).then((books) => {
-    //   console.log(books);
-    //   this.setState({ updatedList: books })
-    //   // this.state.updatedList = books;
-    //   console.log(this.state.updatedList);
-    //
-    // });
+    BooksAPI.update(book, shelf).then((books) => {
+      console.log(books);
+      this.setState({ updatedList: books })
+      // this.state.updatedList = books;
+      console.log(this.state.updatedList);
+
+    });
+  };
+
+  updatedList(){
+    // console.log(books);
+    this.setState(()=>({
+      currentlyReadBooks: this.state.books.filter((book) => book.shelf === 'currentlyReading'),
+      wantToReadBooks: this.state.books.filter((book) => book.shelf === 'wantToRead' ),
+      readBooks: this.state.books.filter((book) => book.shelf === 'read' )
+    }))
   };
 
   render(){
-    const {books} = this.state;
-
-    const currentlyReadBooks= books.filter((book) => book.shelf === 'currentlyReading');
-    const wantToReadBooks= books.filter((book) => book.shelf === 'wantToRead' );
-    const readBooks= books.filter((book) => book.shelf === 'read' );
-    const noneBooks= books.filter((book) => book.shelf === 'none' );
-
+    const {currentlyReadBooks, wantToReadBooks, readBooks} = this.state;
   	return(
       <div className="list-books">
         <div className="list-books-title"><h1>MyReads</h1></div>
@@ -62,10 +66,7 @@ class ListingAllBooks extends Component{
               books={wantToReadBooks}
               onUpdate={this.updateShelf} />
 
-            <ListBooks
-              heading={"None"}
-              books={noneBooks}
-              onUpdate={this.updateShelf} />
+
 
           </div>
         </div>
