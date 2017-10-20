@@ -4,14 +4,15 @@ import Book from './Book'
 
 class ListBooks extends Component {
   static propTypes = {
-    books: PropTypes.array.isRequired,
+    // books: PropTypes.array.isRequired,
     onUpdate: PropTypes.func
   }
   render(){
-    const {books, onUpdate} = this.props;
+    const {books, onUpdate, heading} = this.props;
+    // console.log(th);
   	return(
       <div className="bookshelf">
-        <h2 className="bookshelf-title">{this.props.heading}</h2>
+        <h2 className="bookshelf-title">{heading}</h2>
         <div className="bookshelf-books">
           <ol className="books-grid">
           {books.map((book) => (
