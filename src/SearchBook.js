@@ -13,13 +13,12 @@ class SearchBook extends Component{
   }
 
   onSearch = (query) => {
-    console.log("Component Level: ", query);
+    // console.log("Component Level: ", query);
     this.setState({query: query.trim()})
     if(query !== null && query.length >= 3){
       // const match = new RegExp(escapeRegExp(query), 'i')
       // console.log("Query: ", query);
-      // this.props.toSearchQuery(query)
-      BooksAPI.search(query, 10).then((books)=>{
+      BooksAPI.search(this.state.query, 10).then((books)=>{
         console.log(books);
         this.setState({
           searchedBooks: books,

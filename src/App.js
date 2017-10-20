@@ -31,7 +31,7 @@ class BooksApp extends React.Component {
 
   getAllBooks(){ // get all the books
     BooksAPI.getAll().then((books) => {
-      console.log(books);
+      // console.log(books);
       this.setState({books});
       this.updatedList(this.state.books);
     })
